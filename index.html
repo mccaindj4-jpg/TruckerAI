@@ -4,117 +4,119 @@
 
 <head>
 
-  <meta charset="UTF-8" />
+<meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TruckAI Driver Dashboard</title>
+<title>TruckAI</title>
 
-  <style>
+<style>
 
-    * {
+*{box-sizing:border-box}
 
-      box-sizing: border-box;
+body{
 
-    }
+  margin:0;
 
-    body {
+  font-family:Arial,sans-serif;
 
-      margin: 0;
+  background:#0f1720;
 
-      font-family: Arial, sans-serif;
-
-      background: #0f1720;
-
-      color: white;
-
-    }
-
-    header {
-
-      background: #17232d;
-
-      padding: 18px;
-
-      text-align: center;
-
-      border-bottom: 3px solid #22c55e;
+  color:white;
 
 }
 
-h1 {
+header{
 
-    margin: 0;
+  text-align:center;
 
-    font-size: 30px;
+  padding:25px 15px;
 
-}
+  background:#17232d;
 
-.subtitle {
-
-    color: #b8c4d6;
-
-    margin-top: 8px;
+  border-bottom:4px solid #22c55e;
 
 }
 
-.dashboard {
+header h1{margin:0;font-size:34px}
 
-    padding: 20px;
+header p{color:#b8c4d6}
 
-}
+main{padding:18px;max-width:650px;margin:auto}
 
-.card {
+.card{
 
-    background: #17232d;
+  background:#17232d;
 
-    margin: 15px 0;
+  padding:20px;
 
-    padding: 20px;
+  margin-bottom:18px;
 
-    border-radius: 12px;
-
-    text-align: left;
+  border-radius:15px;
 
 }
 
-.card h2 {
+h2{color:#55c96b;margin-top:0}
 
-    margin-top: 0;
+label{display:block;margin-top:12px;margin-bottom:6px}
 
-    color: #22c55e;
+input,select{
 
-}
+  width:100%;
 
-button {
+  padding:14px;
 
-    width: 100%;
+  border-radius:9px;
 
-    padding: 16px;
+  border:1px solid #50606b;
 
-    margin-top: 10px;
+  background:#0b1218;
 
-    border: none;
+  color:white;
 
-    border-radius: 10px;
-
-    background: #22c55e;
-
-    color: #07120b;
-
-    font-size: 18px;
-
-    font-weight: bold;
+  font-size:16px;
 
 }
 
-.status {
+button{
 
-    color: #86efac;
+  width:100%;
 
-    font-weight: bold;
+  margin-top:16px;
+
+  padding:16px;
+
+  border:0;
+
+  border-radius:10px;
+
+  background:#55c96b;
+
+  color:#07110a;
+
+  font-size:18px;
+
+  font-weight:bold;
 
 }
+
+#routeResult{
+
+  display:none;
+
+  margin-top:15px;
+
+  padding:14px;
+
+  background:#0b1218;
+
+  border-radius:10px;
+
+  border-left:4px solid #55c96b;
+
+}
+
+.status{color:#77e28a;font-weight:bold}
 
 </style>
 
@@ -124,55 +126,137 @@ button {
 
 <header>
 
-    <h1>🚛 TruckAI</h1>
+  <h1>🚛 TruckAI</h1>
 
-    <div class="subtitle">AI-Powered Trucking Assistant</div>
+  <p>AI-Powered Trucking Assistant</p>
 
 </header>
 
-<div class="dashboard">
+<main>
 
-    <div class="card">
+<div class="card">
 
-        <h2>🗺️ Truck Navigation</h2>
+  <h2>🗺️ Truck Navigation</h2>
 
-        <p>Truck-safe routing based on vehicle size, weight and road restrictions.</p>
+  <label>Starting Location</label>
 
-        <button>Start Navigation</button>
+  <input id="start" placeholder="Current location">
 
-    </div>
+  <label>Destination</label>
 
-    <div class="card">
+  <input id="destination" placeholder="Enter delivery address">
 
-        <h2>🛰️ Destination View</h2>
+  <label>Truck Height</label>
 
-        <p>Satellite destination view to help locate entrances, docks and buildings.</p>
+  <select id="height">
 
-        <button>View Destination</button>
+    <option>13 ft 6 in</option>
 
-    </div>
+    <option>13 ft</option>
 
-    <div class="card">
+    <option>12 ft 6 in</option>
 
-        <h2>🤖 AI Driver Assistant</h2>
+  </select>
 
-        <p>Ask TruckAI about routes, fuel stops, parking, weather and trip planning.</p>
+  <label>Truck Weight</label>
 
-        <button>Ask TruckAI</button>
+  <select id="weight">
 
-    </div>
+    <option>80,000 lbs</option>
 
-    <div class="card">
+    <option>70,000 lbs</option>
 
-        <h2>⚠️ Road Alerts</h2>
+    <option>60,000 lbs</option>
 
-        <p class="status">System Ready</p>
+  </select>
 
-        <p>Monitor truck restrictions, low clearances, closures and hazards.</p>
+  <button onclick="startNavigation()">Start Navigation</button>
 
-    </div>
+  <div id="routeResult"></div>
 
 </div>
+
+<div class="card">
+
+  <h2>🛰️ Destination View</h2>
+
+  <p>5-mile overhead destination view for entrances, docks and truck access.</p>
+
+  <button onclick="showDestination()">View Destination</button>
+
+</div>
+
+<div class="card">
+
+  <h2>🤖 AI Driver Assistant</h2>
+
+  <p>Ask TruckAI about routes, fuel stops, parking, weather and trip planning.</p>
+
+  <button onclick="askTruckAI()">Ask TruckAI</button>
+
+</div>
+
+<div class="card">
+
+  <h2>⚠️ Road Alerts</h2>
+
+  <p class="status">● System Ready</p>
+
+  <p>Truck restrictions, low clearances, closures and hazards will appear here.</p>
+
+</div>
+
+</main>
+
+<script>
+
+function startNavigation(){
+
+  const destination=document.getElementById("destination").value;
+
+  const height=document.getElementById("height").value;
+
+  const weight=document.getElementById("weight").value;
+
+  const result=document.getElementById("routeResult");
+
+  if(!destination){
+
+    alert("Please enter a destination.");
+
+    return;
+
+  }
+
+  result.style.display="block";
+
+  result.innerHTML=
+
+    "<strong>🚛 Route Request Started</strong><br><br>"+
+
+    "Destination: "+destination+"<br>"+
+
+    "Truck Height: "+height+"<br>"+
+
+    "Truck Weight: "+weight+"<br><br>"+
+
+    "TruckAI is preparing a truck-safe route.";
+
+}
+
+function showDestination(){
+
+  alert("5-mile destination satellite view is the next feature we will connect.");
+
+}
+
+function askTruckAI(){
+
+  alert("TruckAI Driver Assistant is ready for the next development stage.");
+
+}
+
+</script>
 
 </body>
 
